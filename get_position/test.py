@@ -4,15 +4,15 @@ from yolov5.detect import run as run_classifier
 class camera:
     def __init__(self, X = 3840, Y = 2160, SizeX = 7.2 / 10 / 100, SizeY = 5.3 / 10 / 100, F = 0.08):
         # param camera
-        self.X = 3840
-        self.Y = 2160
-        self.SizeX = 7.2 / 10 / 100  # m
-        self.SizeY = 5.3 / 10 / 100  # m
-        self.F = 0.08  # m
-        self.Cx = self.SizeX / self.X
-        self.Cy = self.SizeY / self.Y
+        self.X = X
+        self.Y = Y
+        self.SizeX = SizeX  # m
+        self.SizeY = SizeY  # m
+        self.F = F  # m
+        self.Cx = SizeX / X
+        self.Cy = SizeY / Y
 
-    def find_distance(self, list_labels, X_real):
+    def find_distance(self, list_labels, X_real, perc = 1.):
         distance_list = []
         for i in range(len(list_labels)):
             label = list_labels[i]
@@ -20,10 +20,21 @@ class camera:
             # center_y = int(float(label[2]) * camera.Y)
             width = int(float(label[3]) * self.X) / 2
             # height = int(float(label[4]) * camera.Y)
-            distance = X_real / 2 * self.F / (width * self.Cx)
+            distance = (X_real / 2 * self.F / (width * self.Cx)) * perc
             distance_list.append(distance)
         return distance_list
 
+    # def find_azimut(self, list_labels, X_real):
+    #     angle_list = []
+    #     for i in range(len(list_labels)):
+    #         label = list_labels[i]
+    #         # center_x = int(float(label[1]) * camera.X)
+    #         # center_y = int(float(label[2]) * camera.Y)
+    #         width = int(float(label[3]) * self.X) / 2
+    #         # height = int(float(label[4]) * camera.Y)
+    #         angle = X_real / 2 * self.F / (width * self.Cx)
+    #         angle_list.append(distance)
+    #     return angle_list
 
 if __name__ == "__main__":
     # opt = yolov5.parse_opt()
@@ -36,6 +47,6 @@ if __name__ == "__main__":
     cam = camera()
     Xreal = 59.7  # m
     # Xreal = find_Xreal()
-    list_dist = cam.find_distance(list_label, Xreal)
+    list_dist = cam.find_distance(list_label, Xreal, 0.95)
     for i in range(len(list_dist)):
         print('Расстояние до самолета ', i + 1, " = ", list_dist[i])
