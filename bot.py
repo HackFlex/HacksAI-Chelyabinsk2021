@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
 import os
-from get_position import get_position
+from get_param import get_param
 
 TOKEN = None
 with open('token.txt') as f:
