@@ -41,7 +41,7 @@ class Camera:
 			angle_list.append(angle)
 		return angle_list
 
-def find_distance(self, list_labels, X_real, perc = 1.):
+	def find_distance(self, list_labels, X_real, perc = 1.):
 		distance_list = []
 		for i in range(len(list_labels)):
 			label = list_labels[i]
@@ -70,21 +70,21 @@ def find_distance(self, list_labels, X_real, perc = 1.):
 
 
 class AirCraft:
-'''
-pnts[i][j] - массив ключевых точек самолета точек.
-i - размеры в метрах:
-	0 - правая консоль (окончание)
-	1 - левая консоль (окончание)
-	2 - нижняя часть шасси
-	3 - нос
-	4 - верхняя часть киля
-	5 - левое окончание хвотового оперения
-	6 - правое окончание хвотового оперения
-j:
-	0 - x
-	1 - y
-	2 - z
-'''
+	'''
+	pnts[i][j] - массив ключевых точек самолета точек.
+	i - размеры в метрах:
+		0 - правая консоль (окончание)
+		1 - левая консоль (окончание)
+		2 - нижняя часть шасси
+		3 - нос
+		4 - верхняя часть киля
+		5 - левое окончание хвотового оперения
+		6 - правое окончание хвотового оперения
+	j:
+		0 - x
+		1 - y
+		2 - z
+	'''
 	def __init__(self):
 		pnts = [
 			[-29.85, 2.7, -11.4],
@@ -106,10 +106,12 @@ j:
 			self.pnts[i] = self.pnts[i] * matrix_tang
 
 	def rotate_kren(self, tang):
-		matrix_kren =
+		# matrix_kren =
+		pass
 
 	def rotate_risk(self, tang):
-		matrix_risk =
+		# matrix_risk =
+		pass
 
 	def rotate_aircraft(self, tang, kren, risk):
 		self.pnts = self.rotate_tang(tang)
@@ -122,9 +124,11 @@ j:
 	
 	'''
 	def find_Xreal(self, tang, kren, risk):
+		pass
 
 
-def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
+def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut,
+				list_tang, list_kren, list_risk):
 	params = []
 	for i in range(len(list_dist)):
 		print('Название тестового файла: ', path_img)
@@ -135,18 +139,18 @@ def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
 		# print("Углы в СК аэродрома:")	
 		# print(f'	Угол места:            {list_angle_mesta[i]:.4}, гр')
 		# print(f'	Азимут:                {list_angle_azimut[i]:.4}, гр')	
-		print(f'Тангаж:                    {0.:.4}, гр')
-		print(f'Крен:                      {0.:.4}, гр')
-		print(f'Рысканье:                  {0.:.4}, гр')
+		print(f'Тангаж:                    {list_tang[i]:.4}, гр')
+		print(f'Крен:                      {list_kren[i]:.4}, гр')
+		print(f'Рысканье:                  {list_risk[i]:.4}, гр')
 
 		params.append({
 			'Название тестового файла': path_img,
 			'Расстояние до самолета': list_dist[i],
 			'Угол места': list_angle_mesta[i],
 			'Азимут': list_angle_azimut[i],
-			'Тангаж': 0.,
-			'Крен': 0.,
-			'Рысканье': 0.
+			'Тангаж': list_tang[i],
+			'Крен': list_kren[i],
+			'Рысканье': list_risk[i]
 		})
 	return params
 
