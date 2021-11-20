@@ -24,7 +24,7 @@ async def process_start_command(msg: types.Message):
 def main_process():
     photo = images_dir + 'image.jpg'
     try:
-        params = get_position([photo]) #[{'value': 42}]
+        params = get_param([photo]) #[{'value': 42}]
         print('\tSUCCESS')
     except:
         print('\tERROR')
