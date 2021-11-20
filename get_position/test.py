@@ -1,6 +1,4 @@
 from yolov5.detect import run as run_classifier
-import sys
-import cv2
 
 class Camera:
 	def __init__(self, X=3840, Y=2160, SizeX=7.2 / 10 / 100, 
@@ -43,6 +41,63 @@ class Camera:
 			angle_list.append(angle)
 		return angle_list
 
+
+class AirCraft:
+'''
+pnts[i][j] - массив ключевых точек самолета точек.
+i - размеры в метрах:
+	0 - правая консоль (окончание)
+	1 - левая консоль (окончание)
+	2 - нижняя часть шасси
+	3 - нос
+	4 - верхняя часть киля
+	5 - левое окончание хвотового оперения
+	6 - правое окончание хвотового оперения
+j:
+	0 - x
+	1 - y
+	2 - z
+'''
+	def __init__(self):
+		pnts = [
+			[-29.85, 2.7, -11.4],
+			[29.85, 2.7, -11.4],
+			[0, -5.1, 24.6],
+			[0, 0, 29.4],
+			[0, 11.1, -33.9],
+			[10.2, 3, -32.4],
+			[-10.2, 3, 32.4]
+		]
+		
+	def rotate_tang(self, tang):
+		matrix_tang = [
+				[],
+				[],
+				[]
+			]
+		for i in range(len(self.pnts)):
+			self.pnts[i] = self.pnts[i] * matrix_tang
+
+	def rotate_kren(self, tang):
+		matrix_kren =
+
+	def rotate_risk(self, tang):
+		matrix_risk =
+
+	def rotate_aircraft(self, tang, kren, risk):
+		self.pnts = self.rotate_tang(tang)
+		self.pnts = self.rotate_kren(kren)
+		self.pnts = self.rotate_risk(risk)
+	'''
+	заходит 3 угла.
+	Функция поворачивает модель на углы, выделяет
+	максимальные Х и Y. И выдает мини
+	
+	'''
+	def find_Xreal(self, tang, kren, risk):
+
+
+
 def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
 	for i in range(len(list_dist)):
 		print("Название тестового файла: ", path_img)
@@ -57,18 +112,6 @@ def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
 		print(f'Крен:                      {0.:.4}, гр')
 		print(f'Рысканье:                  {0.:.4}, гр')
 
-def get_sodel(img):
-    ddept=cv2.CV_16S
-    scale=1.2
-    ksize=3
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    x = cv2.Sobel(gray, ddept, 1, 0, ksize=ksize, scale=scale)
-    y = cv2.Sobel(gray, ddept, 0, 1, ksize=ksize, scale=scale)
-    absx= cv2.convertScaleAbs(x)
-    absy = cv2.convertScaleAbs(y)
-    grad = cv2.addWeighted(absx, 0.5, absy, 0.5,0)
-    return grad
-
 if __name__ == "__main__":
 	num_arg = len(sys.argv)
 	if (num_arg <= 1):
@@ -76,9 +119,6 @@ if __name__ == "__main__":
 		exit()
 	for i in range(1, num_arg):
 		path_img = sys.argv[i]
-		# img = cv2.imread(path_img)
-		# process_img = cv2.normalize(img, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-		# cv2.imwrite('processed image_' + path_img, process_img)
 		list_label = run_classifier(conf_thres=0.25, return_koord=True, classes=[4], save_txt=False, source='./' + path_img) #, imgsz=3840
 		cam = Camera()
 		Xreal = 59.7  # m
