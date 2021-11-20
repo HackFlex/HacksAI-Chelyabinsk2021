@@ -76,7 +76,7 @@ if __name__ == "__main__":
 		exit()
 	for i in range(1, num_arg):
 		path_img = sys.argv[i]
-		img = cv2.imread(path_img)
+		# img = cv2.imread(path_img)
 		# process_img = cv2.normalize(img, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 		# cv2.imwrite('processed image_' + path_img, process_img)
 		list_label = run_classifier(conf_thres=0.25, return_koord=True, classes=[4], save_txt=False, source='./' + path_img) #, imgsz=3840
