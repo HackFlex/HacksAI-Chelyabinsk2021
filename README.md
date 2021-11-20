@@ -34,3 +34,5 @@ foo@bar$ source flex/bin/activate
 ```console
 (flex) foo@bar$ python main.py
 ```
+
+python get_position/test.py test.jpg test2.jpg 2>./logs.txt

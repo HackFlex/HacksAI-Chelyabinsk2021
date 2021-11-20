@@ -1,5 +1,10 @@
 __pycache__
 runs
 *.mp4
-yolou5s.pt
+yolov5s.pt
 .ssh
+*.jpg
+logs.txt
+output.txt
+*.rar
+*.db
