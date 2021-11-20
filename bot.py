@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher, executor, types
 import os
+from test import get_position
 
 TOKEN = None
 with open('token.txt') as f:
@@ -23,9 +24,11 @@ async def process_start_command(msg: types.Message):
 def main_process():
     photo = images_dir + 'image.jpg'
     try:
-        params = {'value': 42}
+        params = get_position([photo]) #[{'value': 42}]
+        print('\tSUCCESS')
     except:
-        params = {}
+        print('\tERROR')
+        params = []
     os.remove(photo)
     return params
 
@@ -44,10 +47,11 @@ async def handle_docs_photo(msg):
         await bot.send_message(msg.from_user.id, 'ALARM! Ошибка обработки')
         return
 
-    resp = ''
-    for key, value in params.items():
-        resp += f'{key}: {value}\n'
-    await bot.send_message(msg.from_user.id, resp)
+    for item in params:
+        resp = ''
+        for key, value in item.items():
+            resp += f'{key}: {value}\n'
+        await bot.send_message(msg.from_user.id, resp)
 
 @dp.message_handler()
 async def echo_message(msg: types.Message):

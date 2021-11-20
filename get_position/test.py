@@ -44,10 +44,11 @@ class Camera:
 		return angle_list
 
 def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
+	params = []
 	for i in range(len(list_dist)):
-		print("Название тестового файла: ", path_img)
+		print('Название тестового файла: ', path_img)
 		print(f'Расстояние до самолета:    {list_dist[i]:.2f}, м')
-		print("Углы в СК камеры:")	
+		print('Углы в СК камеры:')
 		print(f'	Угол места:            {list_angle_mesta[i]:.4}, гр')
 		print(f'	Азимут:                {list_angle_azimut[i]:.4}, гр')
 		# print("Углы в СК аэродрома:")	
@@ -56,6 +57,17 @@ def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut):
 		print(f'Тангаж:                    {0.:.4}, гр')
 		print(f'Крен:                      {0.:.4}, гр')
 		print(f'Рысканье:                  {0.:.4}, гр')
+
+		params.append({
+			'Название тестового файла': path_img,
+			'Расстояние до самолета': list_dist[i],
+			'Угол места': list_angle_mesta[i],
+			'Азимут': list_angle_azimut[i],
+			'Тангаж': 0.,
+			'Крен': 0.,
+			'Рысканье': 0.
+		})
+	return params
 
 def get_sodel(img):
     ddept=cv2.CV_16S
@@ -69,22 +81,17 @@ def get_sodel(img):
     grad = cv2.addWeighted(absx, 0.5, absy, 0.5,0)
     return grad
 
-if __name__ == "__main__":
-	num_arg = len(sys.argv)
-	if (num_arg <= 1):
-		print("Неправильное количество аргументов")
-		exit()
-	for i in range(1, num_arg):
-		path_img = sys.argv[i]
-		# img = cv2.imread(path_img)
-		# process_img = cv2.normalize(img, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-		# cv2.imwrite('processed image_' + path_img, process_img)
-		list_label = run_classifier(conf_thres=0.25, return_koord=True, classes=[4], save_txt=False, source='./' + path_img) #, imgsz=3840
+def get_position(items):
+	if not items or len(items) < 1:
+		raise Exception('Неправильное количество аргументов')
+	for i in range(len(items)):
+		path_img = items[i]
+		list_label = run_classifier(conf_thres=0.25, return_koord=True, classes=[4], save_txt=False, source='./' + path_img)#, imgsz=3840)
 		cam = Camera()
 		Xreal = 59.7  # m
 		# Xreal = find_Xreal(тангаж, крен, рысканье)
 		list_dist = cam.find_distance(list_label, Xreal)
 		list_angle_mesta = cam.find_angle_mesta(list_label)
 		list_angle_azimut = cam.find_angle_azimut(list_label)
-		print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut)
+		return print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut)
 			
