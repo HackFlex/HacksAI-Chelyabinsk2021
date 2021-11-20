@@ -42,9 +42,17 @@ def get_param(items):
 		cam = Camera()
 		# Xreal = 59.7  # m
 		aircraft = AirCraft()
-		list_kren, list_tang, list_risk = get_angle_aircraft(path_img, list_label)
+		try:
+			list_kren, list_tang, list_risk = get_angle_aircraft(path_img, list_label)
+		except:
+			print('get_angle_aircraft fail')
+			list_kren, list_tang, list_risk = [[0 for _ in range(len(list_label))] for i in range(3)]
 
-		real_size = aircraft.find_real_size(list_tang, list_kren, list_risk)
+		try:
+			real_size = aircraft.find_real_size(list_tang, list_kren, list_risk)
+		except:
+			print('find_real_size fail')
+			real_size = [59.7, 16.8]
 		
 		list_dist = cam.find_distance(list_label, real_size)
 		list_angle_mesta = cam.find_angle_mesta(list_label)
