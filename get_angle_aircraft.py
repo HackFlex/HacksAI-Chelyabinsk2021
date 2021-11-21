@@ -20,9 +20,9 @@ def get_angle_aircraft(img_name, list_label):
 
         arr_angle = predict_angle(img_name, box_pnts)
 
-        kren = arr_angle[0]
-        tang = arr_angle[1]
-        risk = arr_angle[2]
+        kren = arr_angle[0] % 360
+        tang = arr_angle[1] % 360
+        risk = arr_angle[2] % 360
         list_kren.append(kren)
         list_tang.append(tang)
         list_risk.append(risk)

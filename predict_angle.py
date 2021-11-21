@@ -123,7 +123,7 @@ def create_model(path_weight, device):
                                     nn.ReLU(),
                                     nn.Linear(64, 3))
 
-    model_resnet.load_state_dict(torch.load(path_weight), strict=False)
+    model_resnet.load_state_dict(torch.load(path_weight, map_location='cpu'), strict=False)
     model_resnet = model_resnet.to(device)
     return model_resnet
 
@@ -133,7 +133,7 @@ def create_sample(img_path, box):
     image = io.imread(img_path)
     img_x = image.shape[1]
     img_y = image.shape[0]
-    image = image[img_y*y_min:img_y*y_max, img_x*x_min:img_x*x_max]
+    image = image[int(img_y*y_min):int(img_y*y_max), int(img_x*x_min):int(img_x*x_max)]
     sample = {'image': image, 'marks': np.array([0, 0, 0])}
     tsfrm = transforms.Compose([Rescale(300), CenterCrop(224), ToTensor()])
     transformed_sample = tsfrm(sample)
@@ -151,12 +151,12 @@ def predict(model, sample, device, size=224):
 
 
 def main(img_path, box):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cpu') #torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     weights_path = './weights_ver2.pth'
     model_resnet = create_model(weights_path, device)
     sample = create_sample(img_path, box)
     outputs = predict(model_resnet, sample, device)
-    return outputs
+    return outputs[0]
 
 # weights_path = '/content/gdrive/MyDrive/Hacks/weights_ver2.pth'
 # img_path = '/content/gdrive/MyDrive/Hacks/test/-45_10_340.tif'
