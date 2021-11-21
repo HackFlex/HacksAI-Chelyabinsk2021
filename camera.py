@@ -43,21 +43,3 @@ class Camera:
 			angle = self.angle_x * center_x - self.angle_x / 2
 			angle_list.append(angle)
 		return angle_list
-
-	def find_angle_mesta(self, list_labels):
-		angle_list = []
-		for i in range(len(list_labels)):
-			label = list_labels[i]
-			center_y = float(label[2])
-			angle = -self.angle_y * center_y + self.angle_y / 2
-			angle_list.append(angle)
-		return angle_list
-
-	def find_angle_azimut(self, list_labels):
-		angle_list = []
-		for i in range(len(list_labels)):
-			label = list_labels[i]
-			center_x = float(label[1])
-			angle = self.angle_x * center_x - self.angle_x / 2
-			angle_list.append(angle)
-		return angle_list
