@@ -50,27 +50,26 @@ class AirCraft:
 		# ]
 		
 
-	def rotate_kren(self, kren):
-		kren = kren * pi / 180.
-		for i in range(len(self.pnts)):
-			x_old = self.pnts[i][0]
-			y_old = self.pnts[i][1]
-			z_old = self.pnts[i][2]
-			self.pnts[i][0] = x_old * cos(kren) + z_old * sin(kren)
-			self.pnts[i][1] = y_old
-			self.pnts[i][2] = -x_old * sin(kren) + z_old * cos(kren)
-
-
 	def rotate_risk(self, risk):
 		risk = risk * pi / 180.
 		for i in range(len(self.pnts)):
 			x_old = self.pnts[i][0]
 			y_old = self.pnts[i][1]
 			z_old = self.pnts[i][2]
-			self.pnts[i][0] = x_old * cos(risk) - y_old * sin(risk)
-			self.pnts[i][1] = x_old * sin(risk) + y_old * cos(risk)
-			self.pnts[i][2] = z_old
+			self.pnts[i][0] = x_old * cos(risk) + z_old * sin(risk)
+			self.pnts[i][1] = y_old
+			self.pnts[i][2] = -x_old * sin(risk) + z_old * cos(risk)
 
+	def rotate_kren(self, kren):
+		kren = kren * pi / 180.
+		for i in range(len(self.pnts)):
+			x_old = self.pnts[i][0]
+			y_old = self.pnts[i][1]
+			z_old = self.pnts[i][2]
+			self.pnts[i][0] = x_old * cos(kren) - y_old * sin(kren)
+			self.pnts[i][1] = x_old * sin(kren) + y_old * cos(kren)
+			self.pnts[i][2] = z_old
+			kren
 
 	def rotate_aircraft(self, tang, kren, risk):
 		self.rotate_tang(tang)
@@ -107,3 +106,11 @@ class AirCraft:
 			arr_size = [X_real, Y_real]
 			size_list.append(arr_size)
 		return size_list
+
+if __name__ == "__main__":
+	list_tang = [0.]
+	list_kren = [0.]
+	list_risk = [0.]
+	air = AirCraft()
+	list_size = air.find_real_size(list_tang, list_kren, list_risk)
+	print(list_size)
