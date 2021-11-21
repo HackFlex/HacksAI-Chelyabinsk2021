@@ -42,3 +42,7 @@ foo@bar$ source flex/bin/activate
 ```console
 (flex) foo@bar$ python get_param.py <image.jpg>
 ```
+
+## Демонстрация
+Ссылка на демонстрацию работы телеграмм-бота
+> https://youtu.be/hVb8tYyJ_nE
