@@ -13,10 +13,13 @@ _19-21 ноября 2021_
 
 ## Содержание репозитория
 
-* `app.py` - файл с реализацией графического приложения
-
-
-## Описание
+* `bot.py` - файл с реализацией телеграмм-бота
+* `aircraft.py`
+* `camera.py`
+* `get_param.py`
+* `get_angle_aircraft.py`
+* `predict_angle.py`
+* `train_baseline_ver_3.ipynb` - описание работы алгоритмов
 
 ## Установка
 
@@ -30,9 +33,12 @@ foo@bar$ source flex/bin/activate
 
 ## Запуск
 
-Запуск
+Запуск телеграмм-бота
 ```console
-(flex) foo@bar$ python main.py
+(flex) foo@bar$ python bot.py
 ```
 
-python get_position/test.py test.jpg test2.jpg 2>./logs.txt
+Запуск работы алгоритма
+```console
+(flex) foo@bar$ python get_param.py <image.jpg>
+```

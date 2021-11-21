@@ -2,6 +2,7 @@ from yolov5.detect import run as run_classifier
 from camera import Camera
 from aircraft import AirCraft
 from get_angle_aircraft import get_angle_aircraft
+import sys
 
 def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut,
 				list_tang, list_kren, list_risk):
@@ -53,4 +54,7 @@ def get_param(items):
 		return print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut, list_tang, list_kren, list_risk)
 
 if __name__ == "__main__":
-	get_param(['test2.jpg'])
+	try:
+		get_param([sys.argv[1]])
+	except:
+		print('usage: python get_param.py <image.jpg>')
