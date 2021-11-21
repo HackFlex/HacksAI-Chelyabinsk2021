@@ -53,4 +53,4 @@ def get_param(items):
 		return print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut, list_tang, list_kren, list_risk)
 
 if __name__ == "__main__":
-	get_param(['test.jpg'])
+	get_param(['test2.jpg'])

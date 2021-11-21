@@ -24,7 +24,7 @@ async def process_start_command(msg: types.Message):
 def main_process():
     photo = images_dir + 'image.jpg'
     try:
-        params = get_param([photo]) #[{'value': 42}]
+        params = get_param([photo])
         print('\tSUCCESS')
     except:
         print('\tERROR')
@@ -37,7 +37,6 @@ def main_process():
 async def handle_docs_photo(msg):
     try:
         await msg['photo'][-1].download(images_dir + 'image.jpg')
-        # await bot.send_message(msg.from_user.id, 'Изображение загружено!')
     except:
         await bot.send_message(msg.from_user.id, 'ALARM! Изображение не загружено')
         return
@@ -50,7 +49,11 @@ async def handle_docs_photo(msg):
     for item in params:
         resp = ''
         for key, value in item.items():
-            resp += f'{key}: {value}\n'
+            if type(value) is float:
+                value = f'{value:.4f}'
+            resp += f'{key}:\t{value}\n'
+            if key == 'Азимут':
+                resp += '\n'
         await bot.send_message(msg.from_user.id, resp)
 
 @dp.message_handler()
