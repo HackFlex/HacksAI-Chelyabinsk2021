@@ -15,9 +15,15 @@ images_dir = './images/'
 async def process_start_command(msg: types.Message):
 
     welcome_message = 'Здравствуйте!'
-    welcome_message += '\nПо вашей картинке я могу определить: ВСЁ'
-    welcome_message += '\nПрикрепите картинку с изображением самолёта. После этого я верну вам его параметры.'
-    welcome_message += '\n\nСервис работает в тестовом режиме'
+    welcome_message += '\nПрикрепите картинку с изображением самолёта. После этого я верну вам его параметры:'
+    # welcome_message += '\nПо вашей картинке я могу определить:'
+    welcome_message += '\n    * Расстояние до самолета'
+    welcome_message += '\n    * Угол места'
+    welcome_message += '\n    * Азимут'
+    welcome_message += '\n    * Тангаж'
+    welcome_message += '\n    * Крен'
+    welcome_message += '\n    * Рысканье'
+    welcome_message += '\n\nСервис работает в тестовом режиме! Подавайте на вход только 1 изображение'
 
     await msg.reply(welcome_message)
 
