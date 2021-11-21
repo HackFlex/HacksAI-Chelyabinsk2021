@@ -13,9 +13,9 @@ class Camera:
 
 	def find_distance(self, list_labels, real_size):
 		distance_list = []
-		X_real = real_size[0]
-		Y_real = real_size[1]
 		for i in range(len(list_labels)):
+			X_real = real_size[i][0]
+			Y_real = real_size[i][1]
 			label = list_labels[i]
 			width = int(float(label[3]) * self.X) / 2
 			distance1 = (X_real / 2 * self.F / (width * self.Cx))
@@ -42,15 +42,6 @@ class Camera:
 			angle = self.angle_x * center_x - self.angle_x / 2
 			angle_list.append(angle)
 		return angle_list
-
-	def find_distance(self, list_labels, X_real, perc = 1.):
-		distance_list = []
-		for i in range(len(list_labels)):
-			label = list_labels[i]
-			width = int(float(label[3]) * self.X) / 2
-			distance = (X_real / 2 * self.F / (width * self.Cx)) * perc
-			distance_list.append(distance)
-		return distance_list
 
 	def find_angle_mesta(self, list_labels):
 		angle_list = []

@@ -28,7 +28,8 @@ class AirCraft:
 		]
 		
 	def rotate_tang(self, tang):
-		tang = tang * pi / 180
+		# try:
+		tang = tang * pi / 180.
 		for i in range(len(self.pnts)):
 			x_old = self.pnts[i][0]
 			y_old = self.pnts[i][1]
@@ -36,9 +37,21 @@ class AirCraft:
 			self.pnts[i][0] = x_old
 			self.pnts[i][1] = y_old * cos(tang) + z_old * sin(tang)
 			self.pnts[i][2] = -y_old * sin(tang) + z_old * cos(tang)
+		# except:
+		# 	print('rotate_tang fail')
+		# 	self.pnts = [
+		# [-29.85, 2.7, -11.4],
+		# [29.85, 2.7, -11.4],
+		# [0, -5.1, 24.6],
+		# [0, 0, 29.4],
+		# [0, 11.1, -33.9],
+		# [10.2, 3, -32.4],
+		# [-10.2, 3, 32.4]
+		# ]
+		
 
 	def rotate_kren(self, kren):
-		kren = kren * pi / 180
+		kren = kren * pi / 180.
 		for i in range(len(self.pnts)):
 			x_old = self.pnts[i][0]
 			y_old = self.pnts[i][1]
@@ -49,7 +62,7 @@ class AirCraft:
 
 
 	def rotate_risk(self, risk):
-		risk = risk * pi / 180
+		risk = risk * pi / 180.
 		for i in range(len(self.pnts)):
 			x_old = self.pnts[i][0]
 			y_old = self.pnts[i][1]
@@ -69,22 +82,28 @@ class AirCraft:
 	максимальные и минимальные Х и Y. И выдает 2 размера реальных
 	arr_size[X, Y]
 	'''
-	def find_real_size(self, tang, kren, risk):
-		self.rotate_aircraft(tang, kren, risk)
-		X_min = self.pnts[0][0]
-		X_max = self.pnts[0][0]
-		Y_min = self.pnts[0][1]
-		Y_max = self.pnts[0][1]
-		for i in range(len(self.pnts)):
-			if self.pnts[i][0] < X_min:
-				X_min = self.pnts[i][0]
-			if self.pnts[i][0] > X_max:
-				X_max = self.pnts[i][0]
-			if self.pnts[i][1] < Y_min:
-				Y_min = self.pnts[i][1]
-			if self.pnts[i][1] > Y_max:
-				Y_max = self.pnts[i][1]
-		X_real = X_max - X_min
-		Y_real = Y_max - Y_min
-		arr_size = [X_real, Y_real]
-		return arr_size
+	def find_real_size(self, list_tang, list_kren, list_risk):
+		size_list = []
+		for j in range(len(list_tang)):
+			tang = list_tang[j]
+			kren = list_kren[j]
+			risk = list_risk[j]
+			self.rotate_aircraft(tang, kren, risk)
+			X_min = self.pnts[0][0]
+			X_max = self.pnts[0][0]
+			Y_min = self.pnts[0][1]
+			Y_max = self.pnts[0][1]
+			for i in range(len(self.pnts)):
+				if self.pnts[i][0] < X_min:
+					X_min = self.pnts[i][0]
+				if self.pnts[i][0] > X_max:
+					X_max = self.pnts[i][0]
+				if self.pnts[i][1] < Y_min:
+					Y_min = self.pnts[i][1]
+				if self.pnts[i][1] > Y_max:
+					Y_max = self.pnts[i][1]
+			X_real = X_max - X_min
+			Y_real = Y_max - Y_min
+			arr_size = [X_real, Y_real]
+			size_list.append(arr_size)
+		return size_list
