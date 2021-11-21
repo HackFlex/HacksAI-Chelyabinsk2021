@@ -7,7 +7,7 @@ def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut,
 				list_tang, list_kren, list_risk):
 	params = []
 	for i in range(len(list_dist)):
-		print('Название тестового файла: ', path_img)
+		print('Файл: ', path_img)
 		print(f'Расстояние до самолета:    {list_dist[i]:.2f}, м')
 		print('Углы в СК камеры:')
 		print(f'	Угол места:            {list_angle_mesta[i]:.4}, гр')
@@ -20,7 +20,7 @@ def print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut,
 		print(f'Рысканье:                  {list_risk[i]:.4}, гр')
 
 		params.append({
-			'Название тестового файла': path_img,
+			'Файл': path_img,
 			'Расстояние до самолета': list_dist[i],
 			'Угол места': list_angle_mesta[i],
 			'Азимут': list_angle_azimut[i],

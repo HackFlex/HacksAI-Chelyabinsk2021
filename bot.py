@@ -9,6 +9,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
 images_dir = './images/'
+image_file = 'image.jpg'
 
 
 @dp.message_handler(commands=['start', 'help'])
@@ -28,7 +29,7 @@ async def process_start_command(msg: types.Message):
     await msg.reply(welcome_message)
 
 def main_process():
-    photo = images_dir + 'image.jpg'
+    photo = images_dir + image_file
     try:
         params = get_param([photo])
         print('\tSUCCESS')
@@ -39,10 +40,17 @@ def main_process():
     return params
 
 # Загружаем фото
-@dp.message_handler(content_types=['photo'])
+@dp.message_handler(content_types=['photo', 'document'])
 async def handle_docs_photo(msg):
     try:
-        await msg['photo'][-1].download(images_dir + 'image.jpg')
+        if 'photo' in msg:
+            await msg['photo'][-1].download(images_dir + image_file)
+        else:
+            # await msg['document'][-1].download(images_dir + 'image.jpg')
+            file_id = msg.document.file_id
+            file = await bot.get_file(file_id)
+            file_path = file.file_path
+            await bot.download_file(file_path, images_dir + image_file)
     except:
         await bot.send_message(msg.from_user.id, 'ALARM! Изображение не загружено')
         return
@@ -52,9 +60,25 @@ async def handle_docs_photo(msg):
         await bot.send_message(msg.from_user.id, 'ALARM! Ошибка обработки')
         return
 
+    detect_path = './yolov5/runs/detect/'
+    detect = os.listdir(detect_path)
+    detect_help = []
+    for i in detect:
+        try:
+            detect_help.append(int(i[3:]))
+        except:
+            pass
+    detect_help.sort()
+    detect = 'exp' + str(detect_help[-1])
+    print(f'DETECT IN {detect}')
+    detect_path = detect_path + detect + '/'
+    await bot.send_photo(msg.from_user.id, types.input_file.InputFile(detect_path + image_file))
+
     for item in params:
         resp = ''
         for key, value in item.items():
+            if key == 'Файл':
+                continue
             if type(value) is float:
                 value = f'{value:.4f}'
             resp += f'{key}:\t{value}\n'
@@ -65,10 +89,7 @@ async def handle_docs_photo(msg):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     try:
-        # appeal_to_map(msg.text)
-        
-        # await bot.send_photo(msg.from_user.id, msg.photo)
-        await bot.send_message(msg.from_user.id, 'Обращение получено.')
+        await bot.send_message(msg.from_user.id, '/help')
     except:
         await bot.send_message(msg.from_user.id, 'Возможно, самолёт не найден...')
 
