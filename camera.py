@@ -16,13 +16,13 @@ class Camera:
 		for i in range(len(list_labels)):
 			print(real_size)
 			X_real = real_size[i][0]
-			Y_real = real_size[i][1]
+			# Y_real = real_size[i][1]
 			label = list_labels[i]
 			width = int(float(label[3]) * self.X) / 2
-			distance1 = (X_real / 2 * self.F / (width * self.Cx))
-			height = int(float(label[4]) * self.Y) / 2
-			distance2 = (Y_real / 2 * self.F / (height * self.Cy))
-			distance = (distance1 + distance2) / 2
+			distance = (X_real / 2 * self.F / (width * self.Cx))
+			# height = int(float(label[4]) * self.Y) / 2
+			# distance2 = (Y_real / 2 * self.F / (height * self.Cy))
+			# distance = (distance1 + distance2) / 2
 			distance_list.append(distance)
 		return distance_list
 
