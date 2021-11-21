@@ -133,9 +133,28 @@ def create_sample(img_path, box):
     image = io.imread(img_path)
     img_x = image.shape[1]
     img_y = image.shape[0]
-    image = image[int(img_y*y_min):int(img_y*y_max), int(img_x*x_min):int(img_x*x_max)]
+
+    x_min = int(x_min * img_x)
+    x_max = int(x_max * img_x)
+    y_min = int(y_min * img_y)
+    y_max = int(y_max * img_y)
+
+    delta_x = x_max - x_min
+    delta_y = y_max - y_min
+    delta_max = max(delta_x, delta_y)
+
+    centr_x = x_min + delta_max // 2
+    centr_y = y_min + delta_max // 2
+
+    x_min = max(0, centr_x - delta_max // 2)
+    x_max = centr_x + delta_max // 2
+    y_min = max(0, centr_y - delta_max // 2)
+    y_max = centr_y + delta_max // 2
+
+
+    image = image[y_min:y_max, x_min:x_max]
     sample = {'image': image, 'marks': np.array([0, 0, 0])}
-    tsfrm = transforms.Compose([Rescale(300), CenterCrop(224), ToTensor()])
+    tsfrm = transforms.Compose([Rescale(225), CenterCrop(224), ToTensor()])
     transformed_sample = tsfrm(sample)
     return transformed_sample
 
@@ -157,6 +176,7 @@ def main(img_path, box):
     sample = create_sample(img_path, box)
     outputs = predict(model_resnet, sample, device)
     return outputs[0]
+
 
 # weights_path = '/content/gdrive/MyDrive/Hacks/weights_ver2.pth'
 # img_path = '/content/gdrive/MyDrive/Hacks/test/-45_10_340.tif'
