@@ -11,6 +11,8 @@ dp = Dispatcher(bot)
 images_dir = './images/'
 image_file = 'image.jpg'
 
+help_image = './help_image.png'
+
 
 @dp.message_handler(commands=['start', 'help'])
 async def process_start_command(msg: types.Message):
@@ -27,6 +29,14 @@ async def process_start_command(msg: types.Message):
     welcome_message += '\n\nСервис работает в тестовом режиме! Подавайте на вход только 1 изображение'
 
     await msg.reply(welcome_message)
+
+    help_msg = 'На рисунке показаны положительные направления углов:'
+    help_msg += '\nТангаж - [-90; 90]'
+    help_msg += '\nРыскание - [0; 360]'
+    help_msg += '\nКрен - [-90; 90]'
+
+    await bot.send_photo(msg.from_user.id, types.input_file.InputFile(help_image))
+    await bot.send_message(msg.from_user.id, help_msg)
 
 def main_process():
     photo = images_dir + image_file
@@ -58,6 +68,10 @@ async def handle_docs_photo(msg):
         params = main_process()
     except:
         await bot.send_message(msg.from_user.id, 'ALARM! Ошибка обработки')
+        return
+
+    if len(params) == 0:
+        await bot.send_message(msg.from_user.id, 'Самолёт не найден :(')
         return
 
     detect_path = './yolov5/runs/detect/'
