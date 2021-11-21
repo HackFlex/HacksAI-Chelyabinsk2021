@@ -14,6 +14,7 @@ class Camera:
 	def find_distance(self, list_labels, real_size):
 		distance_list = []
 		for i in range(len(list_labels)):
+			print(real_size)
 			X_real = real_size[i][0]
 			Y_real = real_size[i][1]
 			label = list_labels[i]

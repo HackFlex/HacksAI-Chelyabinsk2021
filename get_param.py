@@ -47,9 +47,9 @@ def get_param(items):
 		list_dist = cam.find_distance(list_label, real_size)
 		list_angle_mesta = cam.find_angle_mesta(list_label)
 		list_angle_azimut = cam.find_angle_azimut(list_label)
-		print(list_tang)
-		print(list_kren)
-		print(list_risk)
+		# print(list_tang)
+		# print(list_kren)
+		# print(list_risk)
 		return print_param(path_img, list_dist, list_angle_mesta, list_angle_azimut, list_tang, list_kren, list_risk)
 
 if __name__ == "__main__":
