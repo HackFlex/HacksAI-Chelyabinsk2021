@@ -19,7 +19,7 @@ _19-21 ноября 2021_
 * `get_param.py`
 * `get_angle_aircraft.py`
 * `predict_angle.py`
-* `train_baseline_ver_3.ipynb` - описание работы алгоритмов
+* `train_baseline_ver_3.ipynb` - обучение нейросети для нахождения углов
 
 ## Установка
 
